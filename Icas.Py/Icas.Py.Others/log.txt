@@ -1,0 +1,40 @@
+20160614
+cleavage site filtering:
+the 10th or the 11th nucleotide has degradome values.
+
+to cluster the data, every cleavage sites have to be the same length.
+Fix the size to 120
+if there are no 100 surrounding nucleotides, ignore the cleavage site.
+
+clustered 4 gourps, with 6184,  6974,  4667 and 12626 cleavage sites.
+
+the means are 13.41568551982912, 8.6393248178696425, 12.790665468756744 and 11.149654789430635
+
+one-way anova p-value:(comparing all of them)
+F_onewayResult(statistic=45.949313846180331, pvalue=1.2824599729616055e-29)
+there are significant differences between the means of the groups.
+
+compare each of them
+>>> stats.f_oneway(data_dict2[0], data_dict2[1])
+F_onewayResult(statistic=98.556728138035098, pvalue=3.5973512884713298e-23)
+>>> stats.f_oneway(data_dict2[1], data_dict2[2])
+F_onewayResult(statistic=69.897600357189873, pvalue=6.7154208705951102e-17)
+>>> stats.f_oneway(data_dict2[2], data_dict2[3])
+F_onewayResult(statistic=10.21974204903767, pvalue=0.0013932206851485372)
+
+all are siginificantly different.
+
+
+> pairwise.t.test(y, group, p.adjust.method = "holm", pool.sd = TRUE)
+	Pairwise comparisons using t tests with pooled SD 
+
+data:  y and group 
+
+  0       1       2      
+1 0.074   -       -      
+2 3.1e-06 0.015   -      
+3 < 2e-16 6.3e-14 1.8e-07
+
+P value adjustment method: holm 
+
+

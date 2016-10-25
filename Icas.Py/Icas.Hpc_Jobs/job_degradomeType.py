@@ -1,0 +1,1 @@
+degradomeTypes = ["wt","xrn4"]
