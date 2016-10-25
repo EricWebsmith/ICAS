@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Icas.Py", "Icas.Py\Icas.Py.pyproj", "{6448B6FE-9945-48B0-AE8F-1DF31F0FF7B4}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Icas.Hpc_Jobs", "Icas.Hpc_Jobs\Icas.Hpc_Jobs.pyproj", "{8B1A9A91-1803-4E49-9E87-14B9447127C0}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Icas.Linux", "Icas.Linux\Icas.Linux.pyproj", "{2517CAE6-C936-49FE-A63E-820C0DB31E5D}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Icas.Analysis", "Icas.Analysis\Icas.Analysis.pyproj", "{2DC0C26A-A58D-422E-AA5B-CB5782A148CF}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Icas.Py.Others", "Icas.Py.Others\Icas.Py.Others.pyproj", "{E5B4E26C-76B0-469B-8193-23F1B8BEA3B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,8 +17,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6448B6FE-9945-48B0-AE8F-1DF31F0FF7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6448B6FE-9945-48B0-AE8F-1DF31F0FF7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1A9A91-1803-4E49-9E87-14B9447127C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1A9A91-1803-4E49-9E87-14B9447127C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2517CAE6-C936-49FE-A63E-820C0DB31E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2517CAE6-C936-49FE-A63E-820C0DB31E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC0C26A-A58D-422E-AA5B-CB5782A148CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC0C26A-A58D-422E-AA5B-CB5782A148CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B4E26C-76B0-469B-8193-23F1B8BEA3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B4E26C-76B0-469B-8193-23F1B8BEA3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
