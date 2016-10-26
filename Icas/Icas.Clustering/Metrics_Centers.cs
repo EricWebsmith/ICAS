@@ -6,6 +6,11 @@ namespace Icas.Clustering
 {
     public static partial class Metrics
     {
+        public static Sample[] GetMedoidsByDistanceMatrix(double[,] x, int[] labels)
+        {
+            throw new NotImplementedException();
+        }
+
         public static Sample[] GetMedoids(double[,] x, int[] labels)
         {
             if (x.GetLength(0) != labels.Length)

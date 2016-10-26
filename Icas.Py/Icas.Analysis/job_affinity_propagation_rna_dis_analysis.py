@@ -7,19 +7,18 @@ from sklearn import cluster
 from job_degradomeType import degradomeTypes
 #this is for windows:
 #
-os.chdir("C:/Icas.Test/")
+os.chdir("C:/MiCluster.Test/")
 methodName = "affinity_propagation"
 
 
-for length in ["71","121"]:
+for length in ["21","71","121"]:
     for deg in degradomeTypes:
-        #gaussian kernal
-        g = np.loadtxt("cs_rna_distance/cs_rna_distance_matrix_" + length + "_" + deg + "_gaussian.txt",delimiter = " ")
+        X = np.loadtxt("cs_datasets/cs_reactivity_" + deg +"_"+ length + "_feature_selection.csv",delimiter = ",")
         counts = ""
         for damping in [0.5,0.6,0.7,0.8,0.9]:
-            method = AffinityPropagation(damping = damping, convergence_iter = 15, affinity="precomputed")
-            method.fit(g)
-            cluster_count = len(np.unique( method.labels_))
+            method = AffinityPropagation(damping = damping, convergence_iter = 15)
+            method.fit(X)
+            cluster_count = len(method.cluster_centers_)
             counts = counts + "\t" + str(cluster_count)
             if(cluster_count==1):
                 break

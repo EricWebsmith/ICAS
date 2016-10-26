@@ -24,6 +24,11 @@ from job_basic import getParameters
 
 methodName = "spectral_clustering"
 dataset, thread_limit, rounds = getParameters()
+fixedK=0    
+real_args=[arg for arg in sys.argv if arg!="\r"]
+if(len(real_args)>4):
+    fixedK = int(real_args[4].strip())
+
 executioner = ThreadExecutioner(thread_limit)
 createFolders(methodName, dataset)
 
@@ -35,19 +40,27 @@ def worker(X, n_clusters, assign_labels, round):
         return
     method = SpectralClustering(n_clusters = n_clusters, assign_labels = assign_labels)
     method.fit(X)
+    
     np.savetxt(file,method.labels_,fmt = "%d")
 
 
 X = np.loadtxt("cs_datasets/" + dataset + ".csv",delimiter = ",")
-        
-for n_clusters in range(3,6):
+      
+if(fixedK == 0):  
+    for n_clusters in range(3,19):
+        for assign_labels in ["kmeans","discretize"]:
+            for round in range(0,rounds):
+                t = threading.Thread(target=worker, args=(X, n_clusters, assign_labels, round))
+                executioner.add(t)
+else:
     for assign_labels in ["kmeans","discretize"]:
         for round in range(0,rounds):
-            t = threading.Thread(target=worker, args=(X, n_clusters, assign_labels, round))
-            #t.start()
-            #t.join();
+            t = threading.Thread(target=worker, args=(X, fixedK, assign_labels, round))
             executioner.add(t)
 
 executioner.run_all()
 
 print "Job Done!"
+
+#import shutil
+#shutil.copy("job_spectral_clustering.py","c:/Icas.Test/job_spectral_clustering.py")

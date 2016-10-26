@@ -1,29 +1,61 @@
-﻿using Icas.Common;
+﻿using Icas.Clustering;
+using Icas.Common;
 using System;
 using System.IO;
 using System.Linq;
-using Icas.Clustering;
 
 namespace Icas.Reporting
 {
     public class Report
     {
+        private static string GetMedoidImageString(StatisticalResultCsv item)
+        {
+            try
+            {
+                string labelFile =
+$"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
+                DegradomeType dt;
+                Enum.TryParse(item.Degredome, out dt);
+                FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
+
+                int[] medoidIndices = null;
+                if (item.Method.ToUpper() == "KMDOIDS")
+                {
+                    medoidIndices = FileExtension.Readlabels(labelFile).Distinct().ToArray();
+                }
+                else if (ft != FeatureType.Reactivity)
+                {
+                    medoidIndices = CsMetrics.GetMedoidsByDistanceMatrix(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+                }
+                else
+                {
+                    medoidIndices = CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+                }
+
+                medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
+                string medoidImageString = "#### Structure\r\n\r\nFor clustering algorithms using reactivity, the structure is for reference only .\r\n\r\n";
+                int index = 0;
+                foreach (var medoidIndex in medoidIndices)
+                {
+                    medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndex})\r\n\r\n";
+                    medoidImageString += $"![Cleavage site structure]({Config.CsStrucFolder.Replace("\\", "\\\\")}\\\\{dt}\\\\{item.Length}\\\\{medoidIndex}.png)\r\n\r\n";
+                    index++;
+                }
+                return medoidImageString;
+            }
+            catch (Exception)
+            {
+
+                return string.Empty;
+            }
+        }
+
         public static void Run(StatisticalResultCsv item)
         {
             string labelFile =
                 $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
-            DegradomeType dt;
-            Enum.TryParse(item.Degredome, out dt);
-            FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
-            var medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
-            string medoidImageString = "#### Structure\r\n\r\n";
-            int index = 0;
-            foreach (var medoidIndex in medoidIndices)
-            {
-                medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndex})\r\n\r\n";
-                medoidImageString += $"![Cleavage site structure]({Config.CsStrucFolder.Replace("\\", "\\\\")}\\\\{dt}\\\\{item.Length}\\\\{medoidIndex}.png)\r\n\r\n";
-                index++;
-            }
+
+
 
             //![My Figure](C:\\Users\\nzt15bau\\AppData\\Local\\Temp\\tmp1D9C.tmp_ss.svg)
 
@@ -53,11 +85,7 @@ namespace Icas.Reporting
                     }
                     else if (line == @"#### Structure")
                     {
-                        line = medoidImageString;
-                        if (item.Length == 21)
-                        {
-                            line = "";
-                        }
+                        line = item.Length == 21 ? "" : GetMedoidImageString(item);
                     }
                     else if (line == "date: \"3 October 2016\"")
                     {
@@ -70,14 +98,11 @@ namespace Icas.Reporting
 
                     rmdStreamWriter.WriteLine(line);
                 }
-
                 templateStreamReader.Close();
                 rmdStreamWriter.Flush();
                 rmdStreamWriter.Close();
             }
-
             Rmd.ToHtml(rmdFile);
-
         }
     }
 }

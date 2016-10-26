@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="feature_selection.py" />
+    <Compile Include="job_affinity_propagation_rna_dis_analysis.py" />
     <Compile Include="job_affinity_propagation_analysis.py" />
     <Compile Include="job_degradomeType.py" />
     <Compile Include="job_hierarchical_analysis.py" />

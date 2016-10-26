@@ -61,13 +61,13 @@
             this.myDatasetComboBox.FormattingEnabled = true;
             this.myDatasetComboBox.Location = new System.Drawing.Point(81, 39);
             this.myDatasetComboBox.Name = "myDatasetComboBox";
-            this.myDatasetComboBox.Size = new System.Drawing.Size(300, 21);
+            this.myDatasetComboBox.Size = new System.Drawing.Size(340, 21);
             this.myDatasetComboBox.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 68);
+            this.label3.Location = new System.Drawing.Point(302, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 4;
@@ -76,7 +76,7 @@
             // myKSelector
             // 
             this.myKSelector.K = 3;
-            this.myKSelector.Location = new System.Drawing.Point(81, 66);
+            this.myKSelector.Location = new System.Drawing.Point(371, 13);
             this.myKSelector.Maximum = new decimal(new int[] {
             19,
             0,
@@ -101,13 +101,13 @@
             this.positionHolderAlgorithmComboBox.FormattingEnabled = true;
             this.positionHolderAlgorithmComboBox.Location = new System.Drawing.Point(81, 12);
             this.positionHolderAlgorithmComboBox.Name = "positionHolderAlgorithmComboBox";
-            this.positionHolderAlgorithmComboBox.Size = new System.Drawing.Size(300, 21);
+            this.positionHolderAlgorithmComboBox.Size = new System.Drawing.Size(215, 21);
             this.positionHolderAlgorithmComboBox.TabIndex = 6;
             this.positionHolderAlgorithmComboBox.SelectedIndexChanged += new System.EventHandler(this.fixedKAlgorithmComboBox_SelectedIndexChanged);
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(180, 98);
+            this.runButton.Location = new System.Drawing.Point(181, 66);
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(75, 23);
             this.runButton.TabIndex = 7;
@@ -119,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(433, 133);
+            this.ClientSize = new System.Drawing.Size(433, 93);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.positionHolderAlgorithmComboBox);
             this.Controls.Add(this.myKSelector);
