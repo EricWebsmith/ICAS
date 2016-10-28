@@ -1,6 +1,7 @@
 ﻿using Icas.Clustering;
 using Icas.Common;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -17,11 +18,12 @@ $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File
                 DegradomeType dt;
                 Enum.TryParse(item.Degredome, out dt);
                 FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
+                int[] labels = FileExtension.Readlabels(labelFile);
 
                 int[] medoidIndices = null;
-                if (item.Method.ToUpper() == "KMDOIDS")
+                if (item.Method.ToUpper() == "KMEDOIDS")
                 {
-                    medoidIndices = FileExtension.Readlabels(labelFile).Distinct().ToArray();
+                    medoidIndices = labels.Distinct().ToArray();
                 }
                 else if (ft != FeatureType.Reactivity)
                 {
@@ -38,16 +40,44 @@ $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File
                 foreach (var medoidIndex in medoidIndices)
                 {
                     medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndex})\r\n\r\n";
-                    medoidImageString += $"![Cleavage site structure]({Config.CsStrucFolder.Replace("\\", "\\\\")}\\\\{dt}\\\\{item.Length}\\\\{medoidIndex}.png)\r\n\r\n";
+                    medoidImageString +=
+                        $"![Cleavage site structure]({Config.CsStrucFolder.Replace("\\", "\\\\")}\\\\{dt}\\\\{item.Length}\\\\{medoidIndex}.png)\r\n\r\n";
+                    if (ft == FeatureType.RnaDistance)
+                    {
+                        string guid = Guid.NewGuid().ToString().Replace("-", "_");
+                        string file = $"{Config.WorkingFolder}\\reports\\figure\\{guid}.png";
+                        medoidImageString += $"Other structures of the this group:\r\n\r\n";
+                        medoidImageString += $"![Cleavage site structure]({file.Replace("\\", "\\\\")})\r\n\r\n";
+                        GenerateGroupThumbnails(file, item, labels, medoidIndex);
+                    }
                     index++;
                 }
                 return medoidImageString;
             }
             catch (Exception)
             {
-
+                //throw;
                 return string.Empty;
             }
+        }
+
+        private static void GenerateGroupThumbnails(string file, StatisticalResultCsv item, int[] labels, int medoidIndex)
+        {
+            int group = labels[medoidIndex];
+            List<string> imageFiles = new List<string>();
+            for (int i = 0; i < labels.Length; i++)
+            {
+                if (labels[i] == group)
+                {
+                    string imageFile = $"{Config.WorkingFolder}\\cs_rna_struct\\plot\\{item.Degredome}_{item.Length}_{i + 1}.png";
+                    imageFiles.Add(imageFile);
+                }
+                if (imageFiles.Count >= 20)
+                {
+                    break;
+                }
+            }
+            ThumbnailGenerator.Generate(imageFiles, file);
         }
 
         public static void Run(StatisticalResultCsv item)

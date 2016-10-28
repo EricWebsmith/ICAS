@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\Reactivity.cs" />
     <Compile Include="ReactivityGenerator.cs" />
+    <Compile Include="RnaPreprocess.cs" />
     <Compile Include="ThirdParties\TapirUtility.cs" />
     <Compile Include="ThirdParties\Targetfinder.cs" />
   </ItemGroup>

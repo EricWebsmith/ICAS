@@ -28,7 +28,7 @@ from job_basic import createFolders
 from job_basic import getParameters
 
 #code for testing
-#os.chdir("C:\\MiCluster.Test\\")
+#os.chdir("C:\\Icas.Test\\")
 #dataset = "cs_reactivity_xrn4_71"
 #thread_limit = 10
 #rounds = 100

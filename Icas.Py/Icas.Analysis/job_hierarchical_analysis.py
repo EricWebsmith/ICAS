@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 from scipy.cluster import hierarchy
 
-os.chdir("C:\\MiCluster.Test\\")
-upper_triangle = np.loadtxt("cs_datasets/cs_rna_distance_triangle_xrn4_71.txt");
+os.chdir("C:\\Icas.Test\\")
+upper_triangle = np.loadtxt("cs_datasets/cs_structure_wt_121_distance_triangle.csv");
 
 
 Z=hierarchy_result

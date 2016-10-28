@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Icas.Common
 {
     public static class EnumUtil
     {
-        public static IEnumerable<T> GetValues<T>()
+        public static T[] GetValues<T>()
         {
-            return Enum.GetValues(typeof(T)).Cast<T>();
+            return Enum.GetValues(typeof(T)).Cast<T>().ToArray();
         }
     }
 }

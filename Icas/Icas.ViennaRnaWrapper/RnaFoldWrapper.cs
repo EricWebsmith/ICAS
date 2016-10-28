@@ -5,6 +5,8 @@ namespace Icas.ViennaRnaWrapper
 {
     public static class RnaFoldWrapper
     {
+
+
         public static string Fold(string shapeFile, string seqFile)
         {
             Process process = new Process();
@@ -26,5 +28,7 @@ namespace Icas.ViennaRnaWrapper
             string lastLine = lines[2];
             return lastLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
         }
+
+  
     }
 }

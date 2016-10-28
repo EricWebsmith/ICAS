@@ -68,7 +68,8 @@
     <Compile Include="CsvTest.cs" />
     <Compile Include="DegradomeTest.cs" />
     <Compile Include="FastaTest.cs" />
-    <Compile Include="GenerateThumbnails.cs" />
+    <Compile Include="RnaTest.cs" />
+    <Compile Include="ThumbnailsTest.cs" />
     <Compile Include="GeneTest.cs" />
     <Compile Include="MetricsByDistanceMatrixTest.cs" />
     <Compile Include="MetricsTest.cs" />

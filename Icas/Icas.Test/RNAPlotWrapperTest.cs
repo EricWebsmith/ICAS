@@ -7,13 +7,13 @@ namespace Icas.Test
     [TestClass]
     public class RNAPlotWrapperTest
     {
+
         [TestMethod]
-        public void Test()
+        public void PlotTest()
         {
             string temp = RnaPlotWrapper.Plot(".....(((...(((...(((...)))...))).......)))...",
                                              "ACTGACTGACTGACTGACTGACTGACTGACTGACTGACTGACTGA");
             Process.Start(temp);
         }
-
     }
 }

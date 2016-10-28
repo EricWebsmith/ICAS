@@ -45,6 +45,20 @@ namespace Icas.Common
             Save(sb.ToString(), file);
         }
 
+        public static void SaveMatrix(string file, int[,] matrix, string separator = ",")
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1) - 1; j++)
+                {
+                    sb.Append($"{matrix[i, j]},");
+                }
+                sb.Append($"{matrix[i, matrix.GetLength(1) - 1]}\r\n");
+            }
+            Save(sb.ToString(), file);
+        }
+
         public static void SaveList<T>(string file, IEnumerable<T> list)
         {
             StringBuilder sb = new StringBuilder(list.Count() * list.First().ToString().Length);

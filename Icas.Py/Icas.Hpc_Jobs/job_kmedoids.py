@@ -19,42 +19,56 @@
 import numpy as np
 import pickle
 import kmedoids
-from job_degradomeType import degradomeTypes
 import os
 import threading
 
+from job_thread_executioner import ThreadExecutioner
+from job_basic import createFolders
+from job_basic import getParameters
+
 methodName = "kmedoids"
 
+
+dataset, thread_limit, rounds = getParameters()
+fixedK=0    
+real_args=[arg for arg in sys.argv if arg!="\r"]
+if(len(real_args)>4):
+    fixedK = int(real_args[4].strip())
+
+executioner = ThreadExecutioner(thread_limit)
+createFolders(methodName, dataset)
+X = np.loadtxt("cs_datasets/" + dataset + ".csv",delimiter = ",")
+
 #os.chdir("U:\\JICWork")
-#os.chdir("C:\\MiCluster.Test")
+
 
 #this is for multithreading
-def worker(length_structure, deg, distances, k, round):
+def worker(X, k, round):
     """multithreading worker"""
-    labels, medoids = kmedoids.cluster(distances, k)
-    key = methodName + "/length_" + length_structure + "/" + deg + "/individuals/" + methodName + "_k_" + str(k) + "_round_" + str(round)
+    labels, medoids = kmedoids.cluster(X, k)
+    key = methodName + "/" + dataset + "/individuals/" + "/" + methodName + "_" + dataset + "_k_" + str(k) + "_round_" + str(round)
     np.savetxt(key + "_labels.csv",labels,fmt = "%d")
-    np.savetxt(key + "_medoids.csv", medoids, fmt = "%d")
+    #np.savetxt(key + "_medoids.csv", medoids, fmt = "%d")
 
-#create folders
-if not os.path.isdir(methodName):
-    os.mkdir(methodName)
+if(fixedK == 0):
+    for k in range(3, 18):
+        for round in range(0,rounds):
+            t = threading.Thread(target=worker, args=(X, k, round))
+            executioner.add(t)
+else:
+    for round in range(0,rounds):
+        t = threading.Thread(target=worker, args=(X, fixedK, round))
+        executioner.add(t)
 
-for length_structure in ["71","121"]:
-    if not os.path.isdir(methodName + "/length_" + length_structure):     
-        os.mkdir(methodName + "/length_" + length_structure)
-    for deg in degradomeTypes:
-        if not os.path.isdir(methodName + "/length_" + length_structure + "/" + deg):
-            os.mkdir(methodName + "/length_" + length_structure + "/" + deg)
-        if not os.path.isdir(methodName + "/length_" + length_structure + "/" + deg + "/individuals/"):
-            os.mkdir(methodName + "/length_" + length_structure + "/" + deg + "/individuals/")
-        #rna_distance_matrix_71_wt.txt
-        distanceMatrix = np.loadtxt("cs_rna_distance/cs_rna_distance_matrix_" + length_structure + "_" + deg + ".txt",delimiter = " ")
-        
-        for k in range(3, 15):
-            for round in range(0,250):
-                t = threading.Thread(target=worker, args=(length_structure, deg, distanceMatrix, k, round))
-                t.start()
+executioner.run_all()
 
 print "Job Done!"
 print "Job Done!"
+
+
+#import shutil
+#shutil.copy("C:/Repos/Dissertation/Icas.Py/Icas.Hpc_Jobs/job_kmedoids.py","c:/Icas.Test/job_kmedoids.py")
+#os.chdir("C:\\Icas.Test")
+#dataset= "cs_structure_wt_71_distance_matrix"
+#thread_limit = 10
+#rounds = 100

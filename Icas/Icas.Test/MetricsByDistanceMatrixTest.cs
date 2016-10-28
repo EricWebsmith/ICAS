@@ -21,7 +21,7 @@ namespace Icas.Test
             };
 
             string distanceMatrixFile = @"U:\JICWork\rna_distance_matrix_71_wt.txt";
-            double[,] distanceMatrix = CsvMatrix.Read(distanceMatrixFile, " ");
+            double[,] distanceMatrix = CsvMatrix.Read(distanceMatrixFile);
             Console.WriteLine("File, Compactness, Mean Squared Error");
             foreach (string file in files)
             {

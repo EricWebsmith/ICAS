@@ -60,14 +60,14 @@ namespace Icas.UI
             }
         }
 
-        private async void hpcContinueButton_Click(object sender, System.EventArgs e)
+        private  void hpcContinueButton_Click(object sender, System.EventArgs e)
         {
             hpcContinueButton.Enabled = false;
-            await ContinueFromHpc();
+             ContinueFromHpc();
             hpcContinueButton.Enabled = true;
         }
 
-        private async Task ContinueFromHpc()
+        private  void ContinueFromHpc()
         {
             var algorithm = (AlgorithmCsv)algorithmComboBox.SelectedItem;
             var datasets = GetSelectedDatasets();

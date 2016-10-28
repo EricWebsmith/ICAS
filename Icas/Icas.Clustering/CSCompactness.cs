@@ -85,7 +85,7 @@ namespace Icas.Clustering
         private static double GetCompactnessByRnaDistance(string labels_file, DatasetCsv dataset)
         {
             string d_file = $"{Config.WorkingFolder}\\cs_datasets\\{dataset.XFile}";
-            double[,] d = CsvMatrix.Read(d_file, separator: " ");
+            double[,] d = CsvMatrix.Read(d_file);
             int[] y = FileExtension.Readlabels(labels_file);
             return Metrics.CompactnessByDistanceMatrix(d, y);
         }
