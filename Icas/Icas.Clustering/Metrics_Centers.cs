@@ -6,6 +6,21 @@ namespace Icas.Clustering
 {
     public static partial class Metrics
     {
+        public static double[,] GetSubDistanceMatrix(double[,] distanceMatrix, int[] points)
+        {
+            double[,] subMatrix = new double[points.Length, points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                for (int j = i + 1; j < points.Length; j++)
+                {
+                    double distance = distanceMatrix[points[i], points[j]];
+                    subMatrix[i, j] = distance;
+                    subMatrix[j, i] = distance;
+                }
+            }
+            return subMatrix;
+        }
+
         public static Sample[] GetMedoidsByDistanceMatrix(double[,] x, int[] labels)
         {
             throw new NotImplementedException();

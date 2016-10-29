@@ -69,7 +69,7 @@
     <Compile Include="DegradomeTest.cs" />
     <Compile Include="FastaTest.cs" />
     <Compile Include="RnaTest.cs" />
-    <Compile Include="ThumbnailsTest.cs" />
+    <Compile Include="ImageTest.cs" />
     <Compile Include="GeneTest.cs" />
     <Compile Include="MetricsByDistanceMatrixTest.cs" />
     <Compile Include="MetricsTest.cs" />
@@ -84,6 +84,10 @@
     <ProjectReference Include="..\Ezfx.Csv.Ex\Ezfx.Csv.Ex.csproj">
       <Project>{BF9FB380-0631-4B56-80A6-ABDBE2F1B5EA}</Project>
       <Name>Ezfx.Csv.Ex</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Icas.Reporting\Icas.Reporting.csproj">
+      <Project>{29AB07FD-63A5-4596-83FE-3E2C657A26E4}</Project>
+      <Name>Icas.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Icas.ViennaRnaWrapper\Icas.ViennaRnaWrapper.csproj">
       <Project>{CCFECC98-19B8-471E-B3FD-B5037E56FEAE}</Project>

@@ -46,6 +46,7 @@
     <Compile Include="job_thread_executioner.py" />
     <Compile Include="job_thread_helper.py" />
     <Compile Include="kmedoids.py" />
+    <Compile Include="mathEx.py" />
     <Compile Include="MiCluster.Hpc_Jobs.py" />
     <Compile Include="job_kmeans_light.py">
       <SubType>Code</SubType>

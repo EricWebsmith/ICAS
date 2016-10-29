@@ -1,8 +1,9 @@
 ﻿using RDotNet;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
-namespace Icas.Common
+namespace Icas.Reporting
 {
     public class Rmd
     {
@@ -41,6 +42,50 @@ namespace Icas.Common
             Process.Start(htmlFile);
         }
 
+        /// <summary>
+        /// A = matrix( 
+        ///+    c(2, 4, 3, 1, 5, 7), # the data elements 
+        ///+    nrow=2,              # number of rows 
+        ///+    ncol=3,              # number of columns 
+        ///+    byrow = TRUE)        # fill matrix by rows 
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static string PrintMatrix(double[,] matrix)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("matrix(c(");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    sb.Append(matrix[i, j]);
+                    sb.Append(", ");
+                }
+            }
+            sb.Remove(sb.Length - 2, 2);
+            sb.Append($"),nrow={matrix.GetLength(0)},ncol={matrix.GetLength(1)}, byrow = TRUE)\r\n");
+            return sb.ToString();
+        }
 
+        public static string StartRBlock(string blockName)
+        {
+            return $"\r\n```{{r {blockName}}}\r\n";
+        }
+
+        public static string EndRBlock()
+        {
+            return "\r\n```\r\n";
+        }
+
+        public static string RComment(string comment)
+        {
+            return $"\r\n#{comment}\r\n";
+        }
+
+        public static string InsertImage(string file, string message = null)
+        {
+            return $"![{message}]({file.Replace("\\", "/")})\r\n\r\n";
+        }
     }
 }

@@ -13,12 +13,12 @@ namespace Icas.Reporting
         {
             try
             {
-                string labelFile =
-$"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
+                string labelFile = $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
                 DegradomeType dt;
                 Enum.TryParse(item.Degredome, out dt);
                 FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
                 int[] labels = FileExtension.Readlabels(labelFile);
+                double[,] X = Ezfx.Csv.Ex.CsvMatrix.Read($"{Config.WorkingFolder}\\cs_datasets\\{item.Dataset}.csv");
 
                 int[] medoidIndices = null;
                 if (item.Method.ToUpper() == "KMEDOIDS")
@@ -37,18 +37,41 @@ $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File
                 medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
                 string medoidImageString = "#### Structure\r\n\r\nFor clustering algorithms using reactivity, the structure is for reference only .\r\n\r\n";
                 int index = 0;
-                foreach (var medoidIndex in medoidIndices)
+
+                string[] imageFiles = new string[medoidIndices.Length];
+                for (int i = 0; i < medoidIndices.Length; i++)
                 {
-                    medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndex})\r\n\r\n";
-                    medoidImageString +=
-                        $"![Cleavage site structure]({Config.CsStrucFolder.Replace("\\", "\\\\")}\\\\{dt}\\\\{item.Length}\\\\{medoidIndex}.png)\r\n\r\n";
+                    imageFiles[i] =
+                        $"{Config.CsStrucFolder}\\plot\\{dt}_{item.Length}_{medoidIndices[i]}.png";
+                }
+
+                if (ft == FeatureType.RnaDistance)
+                {
+                    double[,] medoidDistanceMatrix = Clustering.Metrics.GetSubDistanceMatrix(X, medoidIndices);
+                    medoidImageString += Rmd.StartRBlock("distance_matrx");
+                    medoidImageString += Rmd.PrintMatrix(medoidDistanceMatrix);
+                    medoidImageString += Rmd.EndRBlock();
+                    if (medoidIndices.Length == 3)
+                    {
+                        string guid = Guid.NewGuid().ToString().Replace("-", "_");
+                        string file = $"{Config.WorkingFolder}\\reports\\figure\\{guid}.png";
+                        ImageHelper.DistanceTriangle(file, imageFiles, MathEx.DistanceMatrixToTriangle(medoidDistanceMatrix));
+                        medoidImageString += Rmd.InsertImage(file, "distance");
+                    }
+
+                }
+
+                for (int i = 0; i < medoidIndices.Length; i++)
+                {
+                    medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndices[i]})\r\n\r\n";
+                    medoidImageString += Rmd.InsertImage(imageFiles[i], "Cleavage site structure");
                     if (ft == FeatureType.RnaDistance)
                     {
                         string guid = Guid.NewGuid().ToString().Replace("-", "_");
                         string file = $"{Config.WorkingFolder}\\reports\\figure\\{guid}.png";
                         medoidImageString += $"Other structures of the this group:\r\n\r\n";
                         medoidImageString += $"![Cleavage site structure]({file.Replace("\\", "\\\\")})\r\n\r\n";
-                        GenerateGroupThumbnails(file, item, labels, medoidIndex);
+                        GenerateGroupThumbnails(file, item, labels, medoidIndices[i]);
                     }
                     index++;
                 }
@@ -77,7 +100,7 @@ $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File
                     break;
                 }
             }
-            ThumbnailGenerator.Generate(imageFiles, file);
+            ImageHelper.Thumbnails(imageFiles, file);
         }
 
         public static void Run(StatisticalResultCsv item)

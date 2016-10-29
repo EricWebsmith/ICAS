@@ -7,20 +7,39 @@ from sklearn import cluster
 from job_degradomeType import degradomeTypes
 #this is for windows:
 #
-os.chdir("C:/MiCluster.Test/")
-methodName = "affinity_propagation"
+os.chdir("C:/Icas.Test/")
+
 
 
 for length in ["21","71","121"]:
     for deg in degradomeTypes:
-        X = np.loadtxt("cs_datasets/cs_reactivity_" + deg +"_"+ length + "_feature_selection.csv",delimiter = ",")
+        X = np.loadtxt("cs_datasets/cs_reactivity_" + deg + "_" + length + "_feature_selection.csv",delimiter = ",")
         counts = ""
         for damping in [0.5,0.6,0.7,0.8,0.9]:
             method = AffinityPropagation(damping = damping, convergence_iter = 15)
             method.fit(X)
             cluster_count = len(method.cluster_centers_)
             counts = counts + "\t" + str(cluster_count)
-            if(cluster_count==1):
+            if(cluster_count == 1):
+                break
+        print counts
+print "Job Done!"
+print "Job Done!"
+
+
+#RNA Distance
+for length in ["71","121"]:
+    for deg in degradomeTypes:
+        d = np.loadtxt("cs_datasets/cs_structure_" + deg + "_" + length + "_distance_matrix.csv",delimiter = ",")
+        std = np.std(d)
+        G = gaussian(d,std)
+        counts = ""
+        for damping in range(5,10): # [0.5,0.6,0.7,0.8,0.9,0.99]:
+            method = AffinityPropagation(damping = damping * 1.0 / 10, convergence_iter = 15)
+            method.fit(G)
+            cluster_count = len(method.cluster_centers_)
+            counts = counts + "\t" + str(cluster_count)
+            if(cluster_count == 1):
                 break
         print counts
 print "Job Done!"

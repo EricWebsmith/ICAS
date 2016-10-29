@@ -115,6 +115,5 @@ namespace Icas.Clustering
             finalResult.Dataset = dataset.Name;
             finalResult.Transformation = dataset.Transformation;
         }
-
     }
 }

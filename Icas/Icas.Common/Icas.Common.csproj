@@ -67,6 +67,7 @@
     <Compile Include="DegradomeType.cs" />
     <Compile Include="EnumUtil.cs" />
     <Compile Include="FileCompare.cs" />
+    <Compile Include="MathEx.cs" />
     <Compile Include="MiClusterException.cs" />
     <Compile Include="NameAlias.cs" />
     <Compile Include="PathExtension.cs" />
@@ -74,8 +75,6 @@
     <Compile Include="FileExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Statistics.cs" />
-    <Compile Include="ThumbnailGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
