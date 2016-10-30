@@ -35,14 +35,17 @@ namespace Icas.Reporting
                 }
 
                 medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
+                medoidIndices = medoidIndices.OrderBy(c => c).ToArray();
                 string medoidImageString = "#### Structure\r\n\r\nFor clustering algorithms using reactivity, the structure is for reference only .\r\n\r\n";
                 int index = 0;
 
-                string[] imageFiles = new string[medoidIndices.Length];
+                string[] centerBitmapFiles = new string[medoidIndices.Length];
+                string[] annotation = new string[medoidIndices.Length];
                 for (int i = 0; i < medoidIndices.Length; i++)
                 {
-                    imageFiles[i] =
+                    centerBitmapFiles[i] =
                         $"{Config.CsStrucFolder}\\plot\\{dt}_{item.Length}_{medoidIndices[i]}.png";
+                    annotation[i] = $"Medoids {i}";
                 }
 
                 if (ft == FeatureType.RnaDistance)
@@ -55,33 +58,61 @@ namespace Icas.Reporting
                     {
                         string guid = Guid.NewGuid().ToString().Replace("-", "_");
                         string file = $"{Config.WorkingFolder}\\reports\\figure\\{guid}.png";
-                        ImageHelper.DistanceTriangle(file, imageFiles, MathEx.DistanceMatrixToTriangle(medoidDistanceMatrix));
+                        ImageHelper.DistanceTriangle(file, centerBitmapFiles, MathEx.DistanceMatrixToTriangle(medoidDistanceMatrix));
                         medoidImageString += Rmd.InsertImage(file, "distance");
                     }
 
                 }
 
+                int[][] samples = Metrics.Sample(labels, 20);
+
+
+
                 for (int i = 0; i < medoidIndices.Length; i++)
                 {
                     medoidImageString += $"##### Centre of Cluster {index} (Data Point {medoidIndices[i]})\r\n\r\n";
-                    medoidImageString += Rmd.InsertImage(imageFiles[i], "Cleavage site structure");
+                    medoidImageString += Rmd.InsertImage(centerBitmapFiles[i], "Cleavage site structure");
                     if (ft == FeatureType.RnaDistance)
                     {
-                        string guid = Guid.NewGuid().ToString().Replace("-", "_");
-                        string file = $"{Config.WorkingFolder}\\reports\\figure\\{guid}.png";
+                        string thumbFile = GetFilename();
                         medoidImageString += $"Other structures of the this group:\r\n\r\n";
-                        medoidImageString += $"![Cleavage site structure]({file.Replace("\\", "\\\\")})\r\n\r\n";
-                        GenerateGroupThumbnails(file, item, labels, medoidIndices[i]);
+                        medoidImageString += $"![Cleavage site structure]({thumbFile.Replace("\\", "\\\\")})\r\n\r\n";
+                        GenerateGroupThumbnails(thumbFile, item, samples[i]);
+                        //star
+                        if (medoidIndices.Length == 3)
+                        {
+                            medoidImageString += $"examine the first of the above:\r\n\r\n";
+                            string starFile = GetFilename();
+                            medoidImageString += $"![Cleavage site structure]({starFile.Replace("\\", "\\\\")})\r\n\r\n";
+                            int first = samples[i][0];
+                            ImageHelper.Star(starFile,
+                                $"{Config.WorkingFolder}\\cs_rna_struct\\plot\\{item.Degredome}_{item.Length}_{first + 1}.png",
+                                $"CS {first + 1}",
+                                centerBitmapFiles, annotation,
+                                new float[] { (float)X[first, medoidIndices[0]], (float)X[first, medoidIndices[1]], (float)X[first, medoidIndices[2]] }
+                                );
+                        }
                     }
                     index++;
                 }
                 return medoidImageString;
             }
-            catch (Exception)
+            catch (NotImplementedException)
             {
                 //throw;
                 return string.Empty;
             }
+        }
+
+        private static void GenerateGroupThumbnails(string file, StatisticalResultCsv item, int[] samples)
+        {
+            List<string> imageFiles = new List<string>();
+            foreach (var sample in samples)
+            {
+                string imageFile = $"{Config.WorkingFolder}\\cs_rna_struct\\plot\\{item.Degredome}_{item.Length}_{sample + 1}.png";
+                imageFiles.Add(imageFile);
+            }
+            ImageHelper.Thumbnails(imageFiles, file);
         }
 
         private static void GenerateGroupThumbnails(string file, StatisticalResultCsv item, int[] labels, int medoidIndex)
@@ -156,6 +187,11 @@ namespace Icas.Reporting
                 rmdStreamWriter.Close();
             }
             Rmd.ToHtml(rmdFile);
+        }
+
+        private static string GetFilename()
+        {
+            return $"{Config.WorkingFolder}\\reports\\figure\\{Guid.NewGuid().ToString().Replace("-", "_")}.png";
         }
     }
 }

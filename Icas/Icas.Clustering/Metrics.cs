@@ -140,5 +140,54 @@ namespace Icas.Clustering
             result = Math.Sqrt(result);
             return result;
         }
+
+        public static int[][] Sample(int[] labels, int sampleSize)
+        {
+            //int[] groups = labels.Distinct().OrderBy(c => c).ToArray();
+            int[][] splits = Split(labels);
+            int[][] results = new int[splits.Length][];
+            for (int i = 0; i < splits.Length; i++)
+            {
+                List<int> samples = new List<int>();
+                if (splits[i].Length < sampleSize)
+                {
+                    results[i] = splits[i];
+                }
+                else
+                {
+                    results[i] = splits[i].OrderBy(c => Guid.NewGuid()).Take(sampleSize).ToArray();
+                }
+            }
+            return results;
+        }
+
+        public static int[][] Split(int[] labels)
+        {
+            int[] groups = labels.Distinct().OrderBy(c => c).ToArray();
+            List<int>[] results = new List<int>[groups.Length];
+            for (int i = 0; i < groups.Length; i++)
+            {
+                results[i] = new List<int>();
+            }
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                results[GetIndex(groups, labels[i])].Add(i);
+            }
+
+            return results.Select(c => c.ToArray()).ToArray();
+        }
+
+        private static int GetIndex(int[] groups, int value)
+        {
+            for (int i = 0; i < groups.Length; i++)
+            {
+                if (groups[i] == value)
+                {
+                    return i;
+                }
+            }
+            throw new Exception("Index not found");
+        }
     }
 }

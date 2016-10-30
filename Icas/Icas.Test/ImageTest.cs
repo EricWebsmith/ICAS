@@ -42,13 +42,27 @@ namespace Icas.Test
         public void MedoidTriangle()
         {
             string[] imageFiles = new[]
-{
+            {
                 @"C:\Dropbox\Dissertation\sc_wt_71_group0.png",
                 @"C:\Dropbox\Dissertation\sc_wt_71_group1.png",
                 @"C:\Dropbox\Dissertation\sc_wt_71_group2.png"
             };
             ImageHelper.DistanceTriangle(@"C:\Temp\1.png", imageFiles, new double[] { 50, 60, 70 });
             System.Diagnostics.Process.Start(@"C:\Temp\1.png");
+        }
+
+        [TestMethod]
+        public void Star()
+        {
+            string[] imageFiles = new[]
+            {
+                @"C:\Dropbox\Dissertation\sc_wt_71_group0.png",
+                @"C:\Dropbox\Dissertation\sc_wt_71_group1.png",
+                @"C:\Dropbox\Dissertation\sc_wt_71_group2.png"
+            };
+            string[] annotation = new[] { "0", "1", "2" };
+            ImageHelper.Star(@"C:\Temp\2.png", imageFiles[0], "me", imageFiles, annotation, new float[] { 50, 60, 70 });
+            System.Diagnostics.Process.Start(@"C:\Temp\2.png");
         }
     }
 }
