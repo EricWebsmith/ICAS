@@ -41,6 +41,9 @@
     <Compile Include="job_meanshift_analysis.py" />
     <Compile Include="job_meanshift.py" />
     <Compile Include="job_oneway.py" />
+    <Compile Include="job_plot2d.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="job_spectral_clustering.py" />
     <Compile Include="job_spectral_clustering_rna_distance.py" />
     <Compile Include="job_thread_executioner.py" />

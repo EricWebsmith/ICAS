@@ -139,7 +139,7 @@ namespace Icas.Reporting
             string labelFile =
                 $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
 
-
+            FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
 
             //![My Figure](C:\\Users\\nzt15bau\\AppData\\Local\\Temp\\tmp1D9C.tmp_ss.svg)
 
@@ -178,6 +178,20 @@ namespace Icas.Reporting
                     else if (line == "csv_data = read.csv(\"cs_datasets/cs_reactivity_wt_21.csv\", sep=\",\", header = FALSE)")
                     {
                         line = $"csv_data = read.csv(\"{Config.WorkingFolder.Replace("\\", "\\\\")}/cs_datasets/cs_reactivity_{item.Degredome}_{item.Length}.csv\", sep=\",\", header = FALSE)";
+                    }
+                    else if (line.StartsWith("##### Reactivity_centroids"))
+                    {
+                        if (ft == FeatureType.Reactivity)
+                        {
+                            string centroidsPng = GetFilename();
+                            Icas.Common.ProcessExtension.RunScript("job_plot2d.py",
+                                $"{item.Dataset} {labelFile} {centroidsPng}");
+                            line = $"##### centroids\r\n\r\n{Rmd.InsertImage(centroidsPng, "centroids")}";
+                        }
+                        else
+                        {
+                            line = "";
+                        }
                     }
 
                     rmdStreamWriter.WriteLine(line);
