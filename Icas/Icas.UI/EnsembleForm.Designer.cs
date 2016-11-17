@@ -73,7 +73,7 @@ namespace Icas.UI
             // 
             this.candidateDataGridView.AllowUserToAddRows = false;
             this.candidateDataGridView.AllowUserToDeleteRows = false;
-            this.candidateDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.candidateDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.candidateDataGridView.AutoGenerateColumns = false;
             this.candidateDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -333,7 +333,7 @@ namespace Icas.UI
             // 
             // keSelector
             // 
-            this.keSelector.K = 0;
+            this.keSelector.Text = "";
             this.keSelector.Location = new System.Drawing.Point(28, 20);
             this.keSelector.Maximum = new decimal(new int[] {
             19,
@@ -356,7 +356,7 @@ namespace Icas.UI
             // 
             // kiSelector
             // 
-            this.kiSelector.K = 0;
+            this.kiSelector.Text = "";
             this.kiSelector.Location = new System.Drawing.Point(559, 20);
             this.kiSelector.Maximum = new decimal(new int[] {
             19,

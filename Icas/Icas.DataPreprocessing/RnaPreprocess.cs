@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Icas.DataPreprocessing
 {
-    public static class RnaPreprocess
+    public static class RnaDistancePreprocess
     {
 
         private static string workingDir

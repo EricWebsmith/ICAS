@@ -16,7 +16,7 @@ def choose(n, k):
         return 0
 
 def gaussian(distance, std):
-    return math.e**(-distance**2/(2*std**2))
+    return math.e**(-distance**2/(2.*std**2))
 
 
 #import shutil

@@ -22,6 +22,8 @@ namespace Icas.DataPreprocessing
             GenerateStructureFiles();
             // step 9
             GenerateRnaStructPlots();
+            // step 10
+            RnaDistancePreprocess.Process();
         }
 
         public static void GenerateAverageReactivity()

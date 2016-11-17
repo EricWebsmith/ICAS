@@ -11,35 +11,35 @@ namespace Icas.UI.Controls
 
         }
 
-        private int _k = 0;
+        //private int _k = 0;
         public int K
         {
             get
             {
                 if (string.IsNullOrWhiteSpace(Text)) return 0;
-                return (int)_k;
+                return int.Parse(Text);
             }
-            set
-            {
-                if (value == 0)
-                {
-                    Text = "";
-                }
-                else
-                {
-                    Text = value.ToString();
-                }
+            //set
+            //{
+            //    if (value == 0)
+            //    {
+            //        Text = "";
+            //    }
+            //    else
+            //    {
+            //        Text = value.ToString();
+            //    }
 
-                if (value > Maximum || value < Minimum)
-                {
-                    return;
-                }
-                
-                this.Value = value;
-                this.Text = value.ToString();
+            //    if (value > Maximum || value < Minimum)
+            //    {
+            //        return;
+            //    }
 
-                _k = value;
-            }
+            //    this.Value = value;
+            //    this.Text = value.ToString();
+
+            //    //_k = value;
+            //}
         }
     }
 }

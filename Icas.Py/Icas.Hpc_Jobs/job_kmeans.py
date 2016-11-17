@@ -59,7 +59,7 @@ def worker(X, k,init, round):
     np.savetxt(file,method.labels_,fmt = "%d")
 
 if(fixedK == 0):
-    for k in range(3, 10):
+    for k in range(3, 15):
         for init in ['k-means++', 'random']:
             for round in range(0,rounds):
                 t = threading.Thread(target=worker, args=(X, k, init, round))

@@ -27,11 +27,28 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ce.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data_generator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="distance_distribution.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="even_distributed.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="feature_selection.py" />
     <Compile Include="job_affinity_propagation_rna_dis_analysis.py" />
     <Compile Include="job_affinity_propagation_analysis.py" />
     <Compile Include="job_degradomeType.py" />
     <Compile Include="job_hierarchical_analysis.py" />
+    <Compile Include="kmedoids.py" />
+    <Compile Include="kmedoids_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mathEx.py" />
     <Compile Include="MiCluster.Analysis.py" />
     <Compile Include="LinearRegression.py">
       <SubType>Code</SubType>

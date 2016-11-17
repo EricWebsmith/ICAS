@@ -8,7 +8,7 @@ from sklearn.decomposition.pca import PCA
 #from sklearn.feature_selection import SelectKBest
 #from sklearn.feature_selection import chi2
 #from sklearn import metrics
-os.chdir("C:\\MiCluster.Test\\")
+os.chdir("C:\\Icas.Test\\")
 deg = "XRN4"
 length_reactivity = "_121"
 
@@ -24,12 +24,12 @@ X.shape
 
 np.median(sel.variances_)
 
-np.max( sel.variances_)
+np.max(sel.variances_)
 
 
 #plot
 import matplotlib.pyplot as plt
-plt.figure(figsize = (10,5))
+plt.figure(figsize = (7,4))
 plt.plot(sel.variances_)
 plt.text(55,0.135,"0.135, 5th nt", style='italic',
         bbox={'facecolor':'red', 'alpha':0.5, 'pad':1})

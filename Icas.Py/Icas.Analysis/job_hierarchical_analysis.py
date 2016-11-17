@@ -25,8 +25,8 @@ hierarchy_result = hierarchy.linkage(upper_triangle)
 
 
 
-plt.figure(figsize=(30, 10))
-plt.title('Cleave Site Hierarchical Clustering Dendrogram by RNA distance xrn4 71')
+plt.figure(figsize=(10, 4))
+plt.title('Cleave Site Hierarchical Clustering Dendrogram by RNA distance')
 plt.xlabel('Cleavage Sites')
 plt.ylabel('CS distance')
 plt.xlim(0,110)
@@ -36,18 +36,24 @@ hierarchy.dendrogram(
     leaf_font_size=8.,  # font size for the x axis labels
 )
 plt.show()
+print "done"
+
+for i in range(3,19):
+
+    cutree = hierarchy.cut_tree(hierarchy_result, n_clusters=[i])
+
+    alist = []
+
+    for i in range(0,len(cutree)):
+        alist.append(cutree[i][0])
+        #print i
 
 
-cutree = hierarchy.cut_tree(hierarchy_result, n_clusters=[30])
+    unique = np.unique(alist)
 
-alist = []
-
-for i in range(0,len(cutree)):
-    alist.append(cutree[i][0])
-    print i
+    distributionList = []
+    for group in unique:
+        distributionList.append( alist.count(group))
 
 
-unique = np.unique(alist)
-
-for group in unique:
-    alist.count(group)
+    distributionList

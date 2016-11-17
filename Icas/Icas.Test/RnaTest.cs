@@ -43,7 +43,7 @@ namespace Icas.Test
         [TestMethod]
         public void Process()
         {
-            RnaPreprocess.Process();
+            RnaDistancePreprocess.Process();
         }
     }
 }

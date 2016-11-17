@@ -56,3 +56,19 @@ X.shape
 
 X_new = SelectKBest(chi2, k=2).fit_transform(X, y)
 X_new.shape
+
+
+
+def rtpairs():
+    R=[0.0,0.1,0.2]
+    N=[1,10,20]
+    r=[]
+    t=[]
+    for i in N:
+        theta=2*np.pi/i
+        t.append(theta)
+    for j in R:
+        j=j
+        r.append(j)
+    plt.plot(r*np.cos(t),r*np.sin(t), 'bo')
+    plt.show()

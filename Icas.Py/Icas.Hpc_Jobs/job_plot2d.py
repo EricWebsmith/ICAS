@@ -19,8 +19,13 @@ data2d = model.fit_transform(data)
 
 groups = np.sort(np.unique(labels))
 
+
+#plot
+colors = ["b","g","r","c","m","y"]
 x=[]
 y=[]
+xx=[]
+yy=[]
 for group in groups:
     sub_data2d = data2d[labels==group]
     center = np.mean( sub_data2d,axis=0)
@@ -28,9 +33,23 @@ for group in groups:
     y.append(center[1])
 
 plt.figure(figsize=(6,4))
-plt.plot(x,y,"ro")
+
 for i in range(0,len( groups)):
-    plt.annotate(str(i),xy=( x[i], y[i]))
+    color_index = i % len( colors)
+    sub_data2d = data2d[labels==i]
+    plt.scatter(sub_data2d[:,0], sub_data2d[:,1], color=colors[color_index])
+
+for i in range(0,len( groups)):
+    color_index = i % len( colors)
+    sub_data2d = data2d[labels==i]
+    center = np.mean( sub_data2d,axis=0)
+    plt.scatter(center[0],center[1], color = "y", marker = "o", linewidths=5, facecolor="None")    
+    plt.scatter(center[0],center[1], color = colors[color_index], marker = "o", linewidths=3, facecolor="None")
+    
+    plt.annotate(str(i),xy=( center[0], center[1]))
+
+#plt.show()
+
 
 plt.title("Clustering centroids after PCA")
 plt.savefig(output)

@@ -7,35 +7,38 @@ using System.Linq;
 
 namespace Icas.Reporting
 {
-    public class Report
+    public static class Report
     {
+        static int[] medoidIndices = null;
+        static int[] labels;
+
         private static string GetMedoidImageString(StatisticalResultCsv item)
         {
             try
             {
-                string labelFile = $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
+                //string labelFile = $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
                 DegradomeType dt;
                 Enum.TryParse(item.Degredome, out dt);
                 FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
-                int[] labels = FileExtension.Readlabels(labelFile);
+
                 double[,] X = Ezfx.Csv.Ex.CsvMatrix.Read($"{Config.WorkingFolder}\\cs_datasets\\{item.Dataset}.csv");
 
-                int[] medoidIndices = null;
-                if (item.Method.ToUpper() == "KMEDOIDS")
-                {
-                    medoidIndices = labels.Distinct().ToArray();
-                }
-                else if (ft != FeatureType.Reactivity)
-                {
-                    medoidIndices = CsMetrics.GetMedoidsByDistanceMatrix(labelFile, item.Dataset).Select(c => c.Index).ToArray();
-                }
-                else
-                {
-                    medoidIndices = CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray();
-                }
 
-                medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
-                medoidIndices = medoidIndices.OrderBy(c => c).ToArray();
+                //if (item.Method.ToUpper() == "KMEDOIDS")
+                //{
+                //    medoidIndices = labels.Distinct().OrderBy(c => c).ToArray();
+                //}
+                //else if (ft != FeatureType.Reactivity)
+                //{
+                //    medoidIndices = CsMetrics.GetMedoidsByDistanceMatrix(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+                //}
+                //else
+                //{
+                //    medoidIndices = CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+                //}
+
+                //medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
+
                 string medoidImageString = "#### Structure\r\n\r\nFor clustering algorithms using reactivity, the structure is for reference only .\r\n\r\n";
                 int index = 0;
 
@@ -45,7 +48,7 @@ namespace Icas.Reporting
                 {
                     centerBitmapFiles[i] =
                         $"{Config.CsStrucFolder}\\plot\\{dt}_{item.Length}_{medoidIndices[i]}.png";
-                    annotation[i] = $"Medoids {i}";
+                    annotation[i] = $"Medoid {i}";
                 }
 
                 if (ft == FeatureType.RnaDistance)
@@ -139,9 +142,28 @@ namespace Icas.Reporting
             string labelFile =
                 $"{Config.WorkingFolder}\\{item.Method}\\{item.Dataset}\\individuals\\{item.File}";
 
+            string original_dataset = item.Dataset.Replace("_" + item.Transformation, "");
+
             FeatureType ft = FeatureTypeExtension.FromString(item.DataType);
 
+            labels = FileExtension.Readlabels(labelFile);
             //![My Figure](C:\\Users\\nzt15bau\\AppData\\Local\\Temp\\tmp1D9C.tmp_ss.svg)
+            if (item.Method.ToUpper() == "KMEDOIDS")
+            {
+                medoidIndices = labels.Distinct().OrderBy(c => c).ToArray();
+            }
+            else if (ft != FeatureType.Reactivity)
+            {
+                medoidIndices = CsMetrics.GetMedoidsByDistanceMatrix(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+            }
+            else
+            {
+                medoidIndices = CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray();
+            }
+
+            //medoidIndices = ft == FeatureType.Reactivity ? CsMetrics.GetMedoids(labelFile, item.Dataset).Select(c => c.Index).ToArray() : FileExtension.Readlabels(labelFile).Distinct().ToArray();
+            medoidIndices = medoidIndices.OrderBy(c => c).ToArray();
+
 
             string rmdFile = $"{Config.WorkingFolder}\\reports\\{item.File.Replace(".csv", ".Rmd")}";
             using (StreamReader templateStreamReader = new StreamReader($"{Config.WorkingFolder}\\job_report.Rmd"))
@@ -192,6 +214,15 @@ namespace Icas.Reporting
                         {
                             line = "";
                         }
+                    }
+                    else if (line.StartsWith("medoids = c(63, 264, 366)"))
+                    {
+                        line = $"medoids = c({string.Join(", ", medoidIndices.Select(c => c.ToString()))})";
+                    }
+                    //csv_data = read.csv("cs_datasets/cs_structure_wt_71_distance_matrix.csv", sep=",", header = FALSE)
+                    else if (line.StartsWith("csv_data = read.csv(\"cs_datasets/cs_structure_wt_71_distance_matrix.csv\", sep=\",\", header = FALSE)"))
+                    {
+                        line = $"csv_data = read.csv(\"{Config.WorkingFolder.Replace("\\", "/")}cs_datasets/cs_structure_{item.Degredome}_{item.Length}_distance_matrix.csv\", sep=\",\", header = FALSE)";
                     }
 
                     rmdStreamWriter.WriteLine(line);

@@ -119,5 +119,10 @@ namespace Icas.UI
         {
             CleavageSiteUtility.GenerateRnaStructPlots();
         }
+
+        private void cSDistanceMatrixToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RnaDistancePreprocess.Process();
+        }
     }
 }

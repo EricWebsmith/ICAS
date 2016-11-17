@@ -36,7 +36,6 @@ namespace Icas.Test
         [TestMethod]
         public void CompactnessTest_0011()
         {
-            Random r = new Random();
             double[,] x = new double[2, 2] { { 0, 0 }, { 1, 1 } };
             int[] labels = new int[2];
             Assert.AreEqual(Metrics.Compactness(x, labels), 1);
@@ -45,16 +44,18 @@ namespace Icas.Test
         [TestMethod]
         public void CompactnessTest_001122()
         {
-            Random r = new Random();
             double[,] x = new double[3, 2] { { 0, 0 }, { 1, 1 }, { 2, 2 } };
             int[] labels = new int[3];
             Assert.AreEqual(Math.Round(Metrics.Compactness(x, labels), 2), 0.47);
         }
 
+        /// <summary>
+        /// Test the compactness of four neighbouring points.
+        /// The four points are in the same group.
+        /// </summary>
         [TestMethod]
         public void CompactnessTestSquare()
         {
-            Random r = new Random();
             double[,] x = new double[4, 2] { { 0, 0 }, { 1, 1 }, { 0, 1 }, { 1, 0 } };
             int[] labels = new int[4];
             Assert.AreEqual(Math.Round(Metrics.Compactness(x, labels), 2), 0.24);

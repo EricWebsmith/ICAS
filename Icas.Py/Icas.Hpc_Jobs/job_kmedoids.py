@@ -46,9 +46,12 @@ X = np.loadtxt("cs_datasets/" + dataset + ".csv",delimiter = ",")
 #this is for multithreading
 def worker(X, k, round):
     """multithreading worker"""
+    key = methodName + "/" + dataset + "/individuals/" + "/" + methodName + "_" + dataset + "_k_" + str(k) + "_round_" + str(round)  
+    file = key + "_labels.csv"
+    if(os.path.exists(file)):
+        return
     labels, medoids = kmedoids.cluster(X, k)
-    key = methodName + "/" + dataset + "/individuals/" + "/" + methodName + "_" + dataset + "_k_" + str(k) + "_round_" + str(round)
-    np.savetxt(key + "_labels.csv",labels,fmt = "%d")
+    np.savetxt(file,labels,fmt = "%d")
     #np.savetxt(key + "_medoids.csv", medoids, fmt = "%d")
 
 if(fixedK == 0):

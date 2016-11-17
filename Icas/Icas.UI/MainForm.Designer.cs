@@ -38,6 +38,7 @@
             this.generateCleavageSiteFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateAverageReactivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateStructureFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateStructurePlotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.runAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clusteringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +56,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.中文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
-            this.generateStructurePlotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cSDistanceMatrixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,6 +85,7 @@
             this.generateAverageReactivityToolStripMenuItem,
             this.generateStructureFilesToolStripMenuItem,
             this.generateStructurePlotsToolStripMenuItem,
+            this.cSDistanceMatrixToolStripMenuItem,
             this.toolStripSeparator1,
             this.runAllToolStripMenuItem});
             this.stepsToolStripMenuItem.Name = "stepsToolStripMenuItem";
@@ -145,6 +147,13 @@
             this.generateStructureFilesToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.generateStructureFilesToolStripMenuItem.Text = "&8. Generate Structure Files";
             this.generateStructureFilesToolStripMenuItem.Click += new System.EventHandler(this.generateStructureFilesToolStripMenuItem_Click);
+            // 
+            // generateStructurePlotsToolStripMenuItem
+            // 
+            this.generateStructurePlotsToolStripMenuItem.Name = "generateStructurePlotsToolStripMenuItem";
+            this.generateStructurePlotsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.generateStructurePlotsToolStripMenuItem.Text = "9. Generate Structure Plots";
+            this.generateStructurePlotsToolStripMenuItem.Click += new System.EventHandler(this.generateStructurePlotsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -274,12 +283,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // generateStructurePlotsToolStripMenuItem
+            // cSDistanceMatrixToolStripMenuItem
             // 
-            this.generateStructurePlotsToolStripMenuItem.Name = "generateStructurePlotsToolStripMenuItem";
-            this.generateStructurePlotsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.generateStructurePlotsToolStripMenuItem.Text = "9. Generate Structure Plots";
-            this.generateStructurePlotsToolStripMenuItem.Click += new System.EventHandler(this.generateStructurePlotsToolStripMenuItem_Click);
+            this.cSDistanceMatrixToolStripMenuItem.Name = "cSDistanceMatrixToolStripMenuItem";
+            this.cSDistanceMatrixToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.cSDistanceMatrixToolStripMenuItem.Text = "10. CS Distance Matrix";
+            this.cSDistanceMatrixToolStripMenuItem.Click += new System.EventHandler(this.cSDistanceMatrixToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -328,6 +337,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 中文ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateStructurePlotsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cSDistanceMatrixToolStripMenuItem;
     }
 }
 
