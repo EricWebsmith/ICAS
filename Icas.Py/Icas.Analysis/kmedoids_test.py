@@ -92,7 +92,7 @@ blue_x =plt.scatter(centroids[:, 0], centroids[:, 1],
             marker='x', s=169, linewidths=3,
             color='b', zorder=10)
 
-plt.legend((red_o, blue_x), ("Medoid", "Centroid"),
+plt.legend((red_o, blue_x), ("Medoids in k-medoids", "Centroids in k-means"),
            scatterpoints=1,
            loc='upper center',
            ncol=3)

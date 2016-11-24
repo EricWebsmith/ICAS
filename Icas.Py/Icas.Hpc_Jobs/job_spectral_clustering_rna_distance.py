@@ -42,7 +42,7 @@ def worker(n_clusters, assign_labels, round):
 if(fixedK == 0):
     #print("g loaded")
     for round in range(0,rounds):
-        for n_clusters in range(3,15):
+        for n_clusters in range(2,15):
             for assign_labels in ["kmeans","discretize"]:
                 #t = threading.Thread(target=worker, args=(l, deg,g, n_clusters, assign_labels, round))
                 #t.start()

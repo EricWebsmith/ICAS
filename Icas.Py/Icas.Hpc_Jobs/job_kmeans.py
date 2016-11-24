@@ -39,6 +39,8 @@ real_args=[arg for arg in sys.argv if arg!="\r"]
 if(len(real_args)>4):
     fixedK = int(real_args[4].strip())
 methodName = "kmeans"
+
+
 executioner = ThreadExecutioner(thread_limit)
 createFolders(methodName, dataset)
 X = np.loadtxt("cs_datasets/" + dataset + ".csv",delimiter = ",")
@@ -59,7 +61,7 @@ def worker(X, k,init, round):
     np.savetxt(file,method.labels_,fmt = "%d")
 
 if(fixedK == 0):
-    for k in range(3, 15):
+    for k in range(2, 15):
         for init in ['k-means++', 'random']:
             for round in range(0,rounds):
                 t = threading.Thread(target=worker, args=(X, k, init, round))
@@ -67,7 +69,7 @@ if(fixedK == 0):
 else:
     for init in ['k-means++', 'random']:
         for round in range(0,rounds):
-            t = threading.Thread(target=worker, args=(X, k, init, round))
+            t = threading.Thread(target=worker, args=(X, fixedK, init, round))
             executioner.add(t)
 
 executioner.run_all()    

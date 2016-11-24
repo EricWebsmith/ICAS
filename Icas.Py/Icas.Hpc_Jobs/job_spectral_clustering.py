@@ -47,7 +47,7 @@ def worker(X, n_clusters, assign_labels, round):
 X = np.loadtxt("cs_datasets/" + dataset + ".csv",delimiter = ",")
       
 if(fixedK == 0):  
-    for n_clusters in range(3,19):
+    for n_clusters in range(2,3):
         for assign_labels in ["kmeans","discretize"]:
             for round in range(0,rounds):
                 t = threading.Thread(target=worker, args=(X, n_clusters, assign_labels, round))

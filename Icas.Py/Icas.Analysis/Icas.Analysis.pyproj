@@ -30,6 +30,10 @@
     <Compile Include="ce.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Correlation_degradome.py" />
+    <Compile Include="Correlation_reactivity_cleavage_efficiency.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="data_generator.py">
       <SubType>Code</SubType>
     </Compile>

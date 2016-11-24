@@ -75,7 +75,6 @@
             // 
             // myKSelector
             // 
-            this.myKSelector.Text = "";
             this.myKSelector.Location = new System.Drawing.Point(371, 13);
             this.myKSelector.Maximum = new decimal(new int[] {
             19,
@@ -91,7 +90,7 @@
             this.myKSelector.Size = new System.Drawing.Size(50, 20);
             this.myKSelector.TabIndex = 5;
             this.myKSelector.Value = new decimal(new int[] {
-            3,
+            2,
             0,
             0,
             0});

@@ -61,7 +61,7 @@ def oneway(dataset):
                 eff = eff[eff != 0]
                 list.append(eff)
 
-            if(len(list) < 3):
+            if(len(list) < 2):
                 continue
 
             s,p = stats.f_oneway(*list)
@@ -83,3 +83,7 @@ if(dataset==""):
         oneway(subDir)
 else:
     oneway(dataset)
+
+
+#import shutil
+#shutil.copy("job_oneway.py","c:/Icas.Test/job_oneway.py")

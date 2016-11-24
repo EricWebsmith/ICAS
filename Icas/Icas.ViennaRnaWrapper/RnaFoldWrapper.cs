@@ -5,7 +5,7 @@ namespace Icas.ViennaRnaWrapper
 {
     public static class RnaFoldWrapper
     {
-
+        //set PATH=%PATH%;"C:\Program Files (x86)\ViennaRNA Package"
 
         public static string Fold(string shapeFile, string seqFile)
         {
@@ -28,7 +28,5 @@ namespace Icas.ViennaRnaWrapper
             string lastLine = lines[2];
             return lastLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
         }
-
-  
     }
 }

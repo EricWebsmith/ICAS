@@ -55,7 +55,7 @@ def worker(X, k, round):
     #np.savetxt(key + "_medoids.csv", medoids, fmt = "%d")
 
 if(fixedK == 0):
-    for k in range(3, 18):
+    for k in range(2, 15):
         for round in range(0,rounds):
             t = threading.Thread(target=worker, args=(X, k, round))
             executioner.add(t)
